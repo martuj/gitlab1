@@ -103,13 +103,6 @@ variable "environment" {
   default     = "dev"
 }
 ```
-The structure of your directory should be
-
-iac-cicd
-    └── modules
-        └── debian_vm
-            ├── main.tf
-            └── variables.tf
 Next we create the files for the environments: dev
 
 dev/providers.tf
@@ -134,20 +127,6 @@ module "debian_vm" {
   environment = "dev"
 }
 ```
-
-If you have done the above successfully, your repository should now look like this
-
-cicd
-    ├── dev
-    │    ├── provider.tf
-    │    ├── main.tf
-    │    └── backend.tf
-    └── modules
-         └── debian_vm
-              ├── main.tf
-              └── variables.tf
-
-
 
 ### Step3: ANSIBLE
 After terraform has successfully provisioned the VMs and their IP addresses have been created then Ansible takes the job from there. One thing to note is that the implementation of the inventory_file and private_ssh_key is done one by one. For example, dev-vm-ip and dev-ssh-key will be the inventory file and private_ssh_key respectively at a time when the playbook is executed before the next environment is configured. The pipeline file makes this clearer.
