@@ -1,46 +1,25 @@
-In this post, we’re going to dig into one of my top-notch projects in great detail. We’ll take a look at how it operates, while also discussing some areas where we can make improvements to align with industry best practices.
+### PRE-REQUISITES
+For this project, we will be using the Google Cloud Platform for our Infrastructure. 
+* Service account credential
+* GitLab Personal Access Token — the service account credential gotten above as well as the GitLab personal access token must be stored as GitLab pipeline variables. Note, the credential variable should be of type file.
 
-So, what’s the deal of this project? We’re all about implementing a CI/CD pipeline that’s smooth and efficient. This pipeline automatically sets up and configures cloud infrastructure whenever there’s a merge request into the main branch. And guess what? You can zap that whole infrastructure with just one click. It promises to be mind blowing. Alright, let’s start building! Here is the link below
+### Steps
 
-Prince Ogabi / IaC-CICD · GitLab
-GitLab.com
-gitlab.com
-
-PRE-REQUISITES
-For this project, we will be using the Google Cloud Platform for our Infrastructure. The following steps convey what need to be done on the Google Cloud Platform as a pre-requisite of this project.
-
-Google Cloud Setup — follow the steps in the section below from HashiCorp.
-
-Build infrastructure | Terraform | HashiCorp Developer
-Authenticate to Google Cloud and create a VPC network. Write and validate Terraform configuration, initialize a…
-developer.hashicorp.com
-
-GitLab Personal Access Token — the service account credential gotten above as well as the GitLab personal access token must be stored as GitLab pipeline variables. Note, the credential variable should be of type file.
-
-To create a Gitlab Personal Access Token, follow the steps in the link below
-
-Personal access tokens | GitLab
-GitLab product documentation.
-docs.gitlab.com
-
+#### Step1
 After generating the token add the Credential and Token as variables by performing the following steps:
 
 Go to the GitLab project you created for this project
 Click to ‘Settings’ the last option in the sidebar of the project
 Click on ‘CI/CD’, then expand the variables section of the page
 Click ‘Add Variable’, and add the variable for CREDENTIAL and GITLAB_ACCESS _TOKEN. The CREDENTIAL variable must be of type File
-If you do this correctly your Variables should be similar to the screenshot below:
 
-GitLab Pipeline Variables
-GitLab CI/CD Variables
-TERRAFORM
-The terraform files will be for 3 environments — dev, staging and prod, which we will provision with a GitLab Pipeline. Below is a diagram that describes the architecture and connection of the terraform files and operations.
+#### Step2: TERRAFORM
+Below is a diagram that describes the architecture and connection of the terraform files and operations.
 
-terraform schematic
-Now that we have clearly defined the architecture we wish to use, we acan go ahead to write the terraform configuration files. First, we populate the modules/debian_vm folder with the module files main.tf and variables.tf
+First, we populate the modules/debian_vm folder with the module files main.tf and variables.tf
 
 modules/debian_vm/main.tf
-
+```
 # Create Network (VPC)
 resource "google_compute_network" "vpc_network" {
   name                    = "${var.environment}-network"
@@ -102,12 +81,14 @@ resource "local_file" "vm_ip" {
   content  = google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip
   filename = "../${var.environment}_vm_ip.txt"
 }
-modules/debian_vm/variable.tf
+```
 
+modules/debian_vm/variable.tf
+```
 variable "ssh_user" {
   type        = string
   description = "Username of attached to the SSH key"
-  default     = "ogabiprince"
+  default     = "meharuser"
 }
 
 variable "pubkey_file" {
@@ -121,6 +102,7 @@ variable "environment" {
   description = "dev, staging or prod"
   default     = "dev"
 }
+```
 The structure of your directory should be
 
 iac-cicd
@@ -128,61 +110,35 @@ iac-cicd
         └── debian_vm
             ├── main.tf
             └── variables.tf
-Next we create the files for the environments: dev, staging and prod.
+Next we create the files for the environments: dev
 
 dev/providers.tf
-
+```
 # Authenticate with GCP Service account
 provider "google" {
   credentials = file("CREDENTIAL")
 
-  project = "infrastructure-393911"
+  project = "deloitte-team2"
   region  = "us-central1"
   zone    = "us-central1-c"
 }
-If you are creating a project per environment then you will need to make changes to the project argument in the file above for each environment.
+```
 
 dev/main.tf
-
-# Use the debian module to provision the prod environment
+``
+# Use the debian module to provision 
 module "debian_vm" {
   source = "../modules/debian_vm"
   
   # Input variables
   environment = "dev"
 }
-Other options such as the SSH public key file can be added here and more variables could be created in the module for a more flexible configuration.
-
-dev/backend.tf
-
-# Declare provider module to be used
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "4.51.0"
-    }
-  }
-  backend "http" {
-    # Some other credentials
-  }
-}
-This file will normally contain values required to use an HTTP backend (Read more about this here). In our case, we won’t be passing the values here, instead we will pass them to the terraform init command in the pipeline file.
-
-You can go ahead to populate the staging and prod folders. Notice the only thing that changes in the 3 folders is the environment variable in the main.tf. In practice, the project should be different for the 3 environments, the zones, VM configuration, and other configurations may be different and the credentials to authenticate to the project should be different. This will allow good environment isolation and also allow each environment to be better managed.
+```
 
 If you have done the above successfully, your repository should now look like this
 
-iac-cicd
+cicd
     ├── dev
-    │    ├── provider.tf
-    │    ├── main.tf
-    │    └── backend.tf
-    ├── staging
-    │    ├── provider.tf
-    │    ├── main.tf
-    │    └── backend.tf
-    ├── prod
     │    ├── provider.tf
     │    ├── main.tf
     │    └── backend.tf
@@ -190,19 +146,10 @@ iac-cicd
          └── debian_vm
               ├── main.tf
               └── variables.tf
-GITLAB AND TERRAFORM STATE FILES
 
 
-Gitlab Managed Terraform States
-For the sake of this project, we will be managing our Terraform state files using Gitlab because our infrastructure will be managed by the GitLab-CI pipeline. Alternatively you can use an Amazon S3 bucket or a Google Cloud Bucket. I do not recommend using a pipeline cache or artifact to keep the state files because it is not as manageable and transferrable as the other methods mentioned above.
 
-You can read more about the way GitLab manages state files below
-
-GitLab-managed Terraform state | GitLab
-GitLab product documentation.
-docs.gitlab.com
-
-ANSIBLE
+### Step3: ANSIBLE
 After terraform has successfully provisioned the VMs and their IP addresses have been created then Ansible takes the job from there. One thing to note is that the implementation of the inventory_file and private_ssh_key is done one by one. For example, dev-vm-ip and dev-ssh-key will be the inventory file and private_ssh_key respectively at a time when the playbook is executed before the next environment is configured. The pipeline file makes this clearer.
 
 A better approach will be to join the IP addresses and there respective VMs but the outcome is very similar in structure. The image below describes the workflow of Ansible.
