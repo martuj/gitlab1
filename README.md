@@ -119,7 +119,7 @@ provider "google" {
 
 dev/main.tf
 ``
-# Use the debian module to provision 
+ Use the debian module to provision 
 module "debian_vm" {
   source = "../modules/debian_vm"
   
