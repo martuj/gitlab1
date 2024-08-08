@@ -33,8 +33,10 @@ We need to configure a Service Account with Editor Permission that will be used 
     ![image](https://github.com/user-attachments/assets/91a1a551-5004-4686-9f7c-aeb02d08b617)
 
 
-#### Step 3 : TERRAFORM
-Below is a diagram that describes the architecture and connection of the terraform files and operations.
+#### Step 3 : Terraform
+The structure of your directory should be
+![image](https://github.com/user-attachments/assets/06eb022c-38a5-45ae-b1ac-a20167e13788)
+
 
 First, we populate the modules/debian_vm folder with the module files main.tf and variables.tf
 
