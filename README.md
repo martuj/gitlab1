@@ -1,9 +1,23 @@
 ### PRE-REQUISITES
-For this project, we will be using the Google Cloud Platform for our Infrastructure. 
-* Service account credential
-* GitLab Personal Access Token — the service account credential gotten above as well as the GitLab personal access token must be stored as GitLab pipeline variables. Note, the credential variable should be of type file.
+For this project, we will be using the Google Cloud Platform for creating the Infrastructure. 
+* GCP-Service account credential
+* GitLab Personal Access Token 
 
 ### Steps
+
+### Step 1: Generate the Service Account Credentials
+We need to configure a Service Account with Editor Permission that will be used by the pipelines to deploy the resources. To do that:
+1. Go to the IAM in the your project, and create a Service Account.
+2. Choose a name.
+3. Give Editor Permission and create
+4. Now, let’s create a key for the Service Account. Please select the service account, go to the Key section, and add a key in JSON format. Save it for we use in Gitlab CI.
+5. In Gitlab, we just need to configure our Service Account as a Variable. To do this, go to your Gitlab Setting Page
+6. In the CICD Subsection, create a variable called “SA” of File type.
+7. Paste the value of the SA JSON that you have downloaded in the previous steps.
+
+
+
+
 
 #### Step1
 After generating the token add the Credential and Token as variables by performing the following steps:
