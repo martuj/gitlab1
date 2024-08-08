@@ -334,5 +334,9 @@ Your repository should look like if you followed well up to this point.
 
 ![image](https://github.com/user-attachments/assets/c78d4021-567d-4054-9038-72797579d8ed)
 
+Below is the screenshot of the repo
+![image](https://github.com/user-attachments/assets/e1fb39cb-f0d2-4ff7-b710-d3326be38476)
+
+
 Below is the screenshot of the successful pipeline
 ![image](https://github.com/user-attachments/assets/86b886ad-a50b-4373-b200-2e7890608090)
