@@ -1,11 +1,11 @@
-### PRE-REQUISITES
+### Pre-Requisites
 For this project, we will be using the Google Cloud Platform for creating the Infrastructure. 
 * GCP-Service account credential
 * GitLab Personal Access Token 
 
 ### Steps
 
-#### Step 1: Generate the Service Account Credentials
+#### Step 1 : Generate the Service Account Credentials
 We need to configure a Service Account with Editor Permission that will be used by the pipelines to deploy the resources. To do that:
 1. Go to the IAM in the your project, and create a Service Account.
 2. Choose a name.
@@ -28,9 +28,12 @@ We need to configure a Service Account with Editor Permission that will be used 
 9. Go to the GitLab project you created for this project
 10. Click to ‘Settings’ the last option in the sidebar of the project
 11. Click on ‘CI/CD’, then expand the variables section of the page
-12. Click ‘Add Variable’, and add the variable GITLAB_ACCESS _TOKEN. 
+12. Click ‘Add Variable’, and add the variable GITLAB_ACCESS_TOKEN.
 
-#### Step2: TERRAFORM
+    ![image](https://github.com/user-attachments/assets/91a1a551-5004-4686-9f7c-aeb02d08b617)
+
+
+#### Step 3 : TERRAFORM
 Below is a diagram that describes the architecture and connection of the terraform files and operations.
 
 First, we populate the modules/debian_vm folder with the module files main.tf and variables.tf
