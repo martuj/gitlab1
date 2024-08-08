@@ -149,7 +149,7 @@ module "debian_vm" {
 }
 ```
 
-Your final directory structuure should look like below
+Your final directory structure should look like below
 
 ![image](https://github.com/user-attachments/assets/d55c45bf-55df-4a2c-b15a-982ab5348ccf)
 
