@@ -149,6 +149,11 @@ module "debian_vm" {
 }
 ```
 
+Your directory structuure should look like below
+
+![image](https://github.com/user-attachments/assets/d55c45bf-55df-4a2c-b15a-982ab5348ccf)
+
+
 ###$ Step 4: ANSIBLE
 After terraform has successfully provisioned the VMs and their IP addresses have been created then Ansible takes the job from there. One thing to note is that the implementation of the inventory_file and private_ssh_key is done one by one. For example, dev-vm-ip and dev-ssh-key will be the inventory file and private_ssh_key respectively at a time when the playbook is executed before the next environment is configured. The pipeline file makes this clearer.
 
