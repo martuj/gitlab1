@@ -5,27 +5,30 @@ For this project, we will be using the Google Cloud Platform for creating the In
 
 ### Steps
 
-### Step 1: Generate the Service Account Credentials
+#### Step 1: Generate the Service Account Credentials
 We need to configure a Service Account with Editor Permission that will be used by the pipelines to deploy the resources. To do that:
 1. Go to the IAM in the your project, and create a Service Account.
 2. Choose a name.
 3. Give Editor Permission and create
 4. Now, let’s create a key for the Service Account. Please select the service account, go to the Key section, and add a key in JSON format. Save it for we use in Gitlab CI.
-5. In Gitlab, we just need to configure our Service Account as a Variable. To do this, go to your Gitlab Setting Page
-6. In the CICD Subsection, create a variable called “SA” of File type.
-7. Paste the value of the SA JSON that you have downloaded in the previous steps.
+5. Go to the GitLab project you created for this project
+6. Click to ‘Settings’ the last option in the sidebar of the project
+7. Click on ‘CI/CD’, then expand the variables section of the page
+8. Click ‘Add Variable’, and add the variable for CREDENTIAL. The CREDENTIAL variable must be of type File
 
-
-
-
-
-#### Step1
-After generating the token add the Credential and Token as variables by performing the following steps:
-
-Go to the GitLab project you created for this project
-Click to ‘Settings’ the last option in the sidebar of the project
-Click on ‘CI/CD’, then expand the variables section of the page
-Click ‘Add Variable’, and add the variable for CREDENTIAL and GITLAB_ACCESS _TOKEN. The CREDENTIAL variable must be of type File
+#### Step 2 : Create a personal access token in GITLab
+1. On the left sidebar, select your avatar.
+2. Select Edit profile.
+3. On the left sidebar, select Access tokens.
+4. Select Add new token.
+5. Enter a name and expiry date for the token. (The token expires on that date at midnight UTC. If you do not enter an expiry date, the expiry date is automatically set to 365 days later than the current date)
+6. Select the desired scopes.
+7. Select Create personal access token.
+8. Save the personal access token somewhere safe. After you leave the page, you no longer have access to the token.
+9. Go to the GitLab project you created for this project
+10. Click to ‘Settings’ the last option in the sidebar of the project
+11. Click on ‘CI/CD’, then expand the variables section of the page
+12. Click ‘Add Variable’, and add the variable GITLAB_ACCESS _TOKEN. 
 
 #### Step2: TERRAFORM
 Below is a diagram that describes the architecture and connection of the terraform files and operations.
