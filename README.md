@@ -38,7 +38,6 @@ We will generate the Personal Access Token
 The structure of your directory should be
 ![image](https://github.com/user-attachments/assets/06eb022c-38a5-45ae-b1ac-a20167e13788)
 
-
 First, we populate the modules/debian_vm folder with the module files main.tf and variables.tf
 
 modules/debian_vm/main.tf
@@ -126,7 +125,6 @@ variable "environment" {
   default     = "dev"
 }
 ```
-Next we create the files for the environments: dev
 
 dev/providers.tf
 ```
@@ -141,17 +139,17 @@ provider "google" {
 ```
 
 dev/main.tf
-``
- Use the debian module to provision 
+```
+# Use the debian module to provision 
 module "debian_vm" {
   source = "../modules/debian_vm"
   
-  # Input variables
+# Input variables
   environment = "dev"
 }
 ```
 
-### Step3: ANSIBLE
+###$ Step 4: ANSIBLE
 After terraform has successfully provisioned the VMs and their IP addresses have been created then Ansible takes the job from there. One thing to note is that the implementation of the inventory_file and private_ssh_key is done one by one. For example, dev-vm-ip and dev-ssh-key will be the inventory file and private_ssh_key respectively at a time when the playbook is executed before the next environment is configured. The pipeline file makes this clearer.
 
 A better approach will be to join the IP addresses and there respective VMs but the outcome is very similar in structure. The image below describes the workflow of Ansible.
