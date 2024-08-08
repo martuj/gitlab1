@@ -5,18 +5,19 @@ For this project, we will be using the Google Cloud Platform for creating the In
 
 ### Steps
 
-#### Step 1 : Generate the Service Account Credentials
+#### Step 1: Generate the Service Account Credentials
 We need to configure a Service Account with Editor Permission that will be used by the pipelines to deploy the resources.
-1. Go to the IAM in the your project, and create a Service Account.
+1. Go to the IAM in your project, and create a Service Account.
 2. Choose a name.
-3. Give Editor Permission and create
+3. Give the Editor Permission and create
 4. Now, let’s create a key for the Service Account. Please select the service account, go to the Key section, and add a key in JSON format. Save it for we use in Gitlab CI.
 5. Go to the GitLab project you created for this project
-6. Click to ‘Settings’ the last option in the sidebar of the project
+6. Click on ‘Settings’ the last option in the sidebar of the project
 7. Click on ‘CI/CD’, then expand the variables section of the page
 8. Click ‘Add Variable’, and add the variable for CREDENTIAL. The CREDENTIAL variable must be of type File
 
-#### Step 2 : Create a personal access token in GitLab
+#### Step 2: Create a personal access token in GitLab
+We will generate the Personal Access Token
 1. On the left sidebar, select your avatar
 2. Select Edit profile
 3. On the left sidebar, select Access tokens
@@ -26,7 +27,7 @@ We need to configure a Service Account with Editor Permission that will be used 
 7. Select Create personal access token
 8. Save the personal access token somewhere safe. After you leave the page, you no longer have access to the toke
 9. Go to the GitLab project you created for this project
-10. Click to ‘Settings’ the last option in the sidebar of the project
+10. Click on ‘Settings’ the last option in the sidebar of the project
 11. Click on ‘CI/CD’, then expand the variables section of the page
 12. Click ‘Add Variable’, and add the variable GITLAB_ACCESS_TOKEN
 
