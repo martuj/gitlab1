@@ -202,7 +202,6 @@ variables:
   PROJECT_ID: 60651700
   TF_USERNAME: meharnafis
   TF_PASSWORD: ${GITLAB_ACCESS _TOKEN}
-  TF_ADDRESS: https://gitlab.com/api/v4/projects/${PROJECT_ID}/terraform/state/terraform.tfstate
   TERRAFORM_VERSION: 1.5.0
 
 gen_ssh_keys:
