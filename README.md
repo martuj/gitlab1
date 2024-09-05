@@ -272,7 +272,7 @@ actual_provision:
     matrix: 
       - ENVIRONMENT: [dev]
   artifacts:
-    name: dev_vm_ip.txt
+    name: dev_vm_ip
     expire_in: "1 day"
     paths:
       - '*_vm_ip.txt'
