@@ -126,7 +126,7 @@ variable "environment" {
 }
 ```
 
-dev/providers.tf
+dev/provider.tf
 ```
 # Authenticate with GCP Service account
 provider "google" {
