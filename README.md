@@ -155,6 +155,8 @@ Create a folder named ansible_files in the project and ensure that the permissio
 
 ansible_files/ansible.cfg
 ```
+[defaults]
+
 inventory = ../vm_ip.txt
 private_key_file = ../.keys/vm_keys
 host_key_checking = False
