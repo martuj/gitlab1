@@ -161,10 +161,6 @@ inventory = ../vm_ip.txt
 private_key_file = ../.keys/vm_keys
 host_key_checking = False
 remote_user = meharuser
-inventory sets the path to the file that contains the list of IPs that should be SSHed into
-private_key_file sets the path to the private SSH key file
-host_key_checking sets the SSH option StrictHostKeyChecking=no
-remote_user sets the username to authenticate with the VM.
 ```
 
 ansible_files/install_nginx.yml
