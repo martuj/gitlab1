@@ -149,10 +149,6 @@ module "debian_vm" {
 }
 ```
 
-Your final directory structure should look like below
-
-![image](https://github.com/user-attachments/assets/d55c45bf-55df-4a2c-b15a-982ab5348ccf)
-
 
 ### Step 4: ANSIBLE
 Create a folder named ansible_files in the project and ensure that the permission is such that is not a world-writable directory (else, the playbook won’t run. More on that here). Add install_nginx.yml file which is responsible for performing the configuration itself. Next add the ansible.cfg which sets the ansible configuration and so the default configuration file /etc/ansible/ansible.cfg will not be used.
@@ -190,7 +186,7 @@ ansible_files/install_nginx.yml
         enabled: yes
 ```
 
-![image](https://github.com/user-attachments/assets/47cf8d48-d5d4-4029-baa9-d55eeeecd7e6)
+![image](https://github.com/user-attachments/assets/f3936813-5d4a-472d-86ed-9bf7edac6951)
 
 ### Step 5: GitLab PIPELINE
 
