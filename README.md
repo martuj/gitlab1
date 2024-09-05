@@ -105,7 +105,7 @@ resource "local_file" "vm_ip" {
 }
 ```
 
-modules/debian_vm/variable.tf
+modules/debian_vm/variables.tf
 ```
 variable "ssh_user" {
   type        = string
